@@ -4,6 +4,9 @@ import DiiaCommonTypes
 
 // MARK: - RateServiceProtocol
 class RatingServiceOpener: RateServiceProtocol {
+    // MARK: - Static
+    static let instance = RatingServiceOpener()
+    
     func rateDiiaIdByRequest(serviceCode: String, form: PublicServiceRatingForm, successCallback: ((AlertTemplate) -> Void)?, in view: BaseView) {}
     
     func ratePublicServiceByRequest(publicServiceType: String, form: PublicServiceRatingForm, successCallback: ((AlertTemplate) -> Void)?, in view: BaseView) {}

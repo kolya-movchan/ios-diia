@@ -1,6 +1,5 @@
 import Foundation
 import DiiaMVPModule
-import DiiaPublicServicesCore
 
 struct PublicServiceCategoriesListModuleFactory {
     static func create() -> BaseModule {
@@ -15,7 +14,7 @@ struct PublicServiceCategoriesListModuleFactory {
 
 struct PublicServiceOpenerFactory {
     static func create() -> PublicServiceOpener {
-        PublicServiceOpener(apiClient: PublicServicesAPIClient(context: .create()),
+        PublicServiceOpener(apiClient: PublicServicesAPIClient(),
                             routeManager: .init(routeCreateHandlers: .publicServiceRouteCreateHandlers))
     }
 }

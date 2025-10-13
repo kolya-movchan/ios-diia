@@ -1,6 +1,5 @@
 import Foundation
 import DiiaNetwork
-import DiiaPublicServicesCore
 
 extension PublicServiceCoreNetworkContext {
     static func create() -> PublicServiceCoreNetworkContext {
@@ -13,5 +12,4 @@ extension PublicServiceCoreNetworkContext {
                         "User-Agent": AppConstants.App.userAgent]
         )
     }
-
 }

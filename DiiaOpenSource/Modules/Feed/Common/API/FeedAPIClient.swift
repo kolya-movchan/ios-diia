@@ -8,8 +8,9 @@ import DiiaCommonServices
 protocol FeedAPIClientProtocol {
     func getFeedScreen() -> Signal<DSConstructorModel, NetworkError>
     func getFeedNewsScreen() -> Signal<DSConstructorModel, NetworkError>
-    func getFeedNews(pagination: PaginationModel) -> Signal<TemplatedResponse<FeedNewsResponse>, NetworkError>
+    func getFeedNews(pagination: PaginationModel, type: String?) -> Signal<TemplatedResponse<FeedNewsResponse>, NetworkError>
     func getNewsDetails(id: String) -> Signal<DSConstructorModel, NetworkError>
+    func getEnemyTrackingLink() -> Signal<LinkResponse, NetworkError>
 }
 
 class FeedAPIClient: ApiClient<FeedAPI>, FeedAPIClientProtocol {
@@ -21,11 +22,16 @@ class FeedAPIClient: ApiClient<FeedAPI>, FeedAPIClientProtocol {
         return request(.getNewsScreen)
     }
     
-    func getFeedNews(pagination: PaginationModel) -> Signal<TemplatedResponse<FeedNewsResponse>, NetworkError> {
-        return request(.getNews(pagination: pagination))
+    func getFeedNews(pagination: PaginationModel, type: String?) -> Signal<TemplatedResponse<FeedNewsResponse>, NetworkError> {
+        return request(.getNews(pagination: pagination, type: type))
     }
     
     func getNewsDetails(id: String) -> Signal<DSConstructorModel, NetworkError> {
         return request(.getNewsDetails(id: id))
     }
+    
+    func getEnemyTrackingLink() -> Signal<LinkResponse, NetworkError> {
+        return request(.getEnemyTrackingLink)
+    }
 }
+

@@ -6,9 +6,9 @@ final class FeedNewsModule: BaseModule {
     private let view: FeedNewsViewController
     private let presenter: FeedNewsPresenter
     
-    init() {
+    init(type: String? = nil) {
         view = FeedNewsViewController()
-        presenter = FeedNewsPresenter(view: view)
+        presenter = FeedNewsPresenter(view: view, type: type)
         view.presenter = presenter
     }
 

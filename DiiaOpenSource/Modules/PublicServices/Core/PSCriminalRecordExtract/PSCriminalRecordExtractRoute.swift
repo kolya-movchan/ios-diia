@@ -18,6 +18,15 @@ extension NetworkingContext {
     }
 }
 
+extension PSCriminalRecordExtractConfiguration {
+    static func create() -> PSCriminalRecordExtractConfiguration {
+        .init(ratingServiceOpener: RatingServiceOpener.instance,
+              networkingContext: .create(),
+              urlOpener: URLOpenerImpl(),
+              paymentManager: PaymentManager())
+    }
+}
+
 struct PSCriminalRecordExtractRoute: RouterProtocol {
     private let contextMenuItems: [ContextMenuItem]
     
@@ -27,10 +36,7 @@ struct PSCriminalRecordExtractRoute: RouterProtocol {
     
     func route(in view: BaseView) {
         let baseCMP = BaseContextMenuProvider(publicService: .criminalRecordCertificate, items: contextMenuItems)
-        let config: PSCriminalRecordExtractConfiguration = .init(ratingServiceOpener: RatingServiceOpener(),
-                                                                 networkingContext: .create(),
-                                                                 urlOpener: URLOpenerImpl())
-        
-        view.open(module: CriminalExtractListModule(contextMenuProvider: baseCMP, сonfig: config))
+        let config: PSCriminalRecordExtractConfiguration = .create()
+        view.open(module: CriminalExtractMainModule(contextMenuProvider: baseCMP, config: config))
     }
 }

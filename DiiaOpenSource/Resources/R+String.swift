@@ -112,6 +112,14 @@ enum R {
         // MARK: - Feed
         case feed_ticker_label
         case feed_qr_title
+        
+        // MARK: - Service
+        case services_list_title
+        case public_services_search_empty
+        case public_services_search_placeholder
+        case public_services_search
+        case services_unavailable
+        
         func localized() -> String {
             let localized = NSLocalizedString(rawValue, bundle: Bundle.main, comment: "")
             return localized

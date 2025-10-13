@@ -117,3 +117,10 @@
 // MARK: - Feed
 "feed_ticker_label" = "Немає інтернету. Перевірте з'єднання";
 "feed_qr_title" = "Сканувати QR-код";
+
+// MARK: - Service
+"services_list_title" = "Сервіси";
+"public_services_search_empty" = "Не знайдено жодної послуги";
+"public_services_search_placeholder" = "Що шукаєте?";
+"public_services_search" = "Пошук";
+"services_unavailable" = "😕\nУ вас немає доступних\nпослуг.";

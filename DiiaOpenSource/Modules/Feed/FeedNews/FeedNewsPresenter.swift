@@ -7,11 +7,15 @@ import DiiaCommonTypes
 import DiiaCommonServices
 import DiiaUIComponents
 
-protocol FeedNewsAction: BasePresenter { }
+protocol FeedNewsAction: BasePresenter {
+    var itemsCount: Int { get }
+    var totalItems: Int { get }
+    func fetchBatchUpdate()
+}
 
 final class FeedNewsPresenter: FeedNewsAction {
 
-	// MARK: - Properties
+    // MARK: - Properties
     unowned var view: FeedNewsView
 
     private let apiClient: FeedAPIClientProtocol
@@ -21,11 +25,13 @@ final class FeedNewsPresenter: FeedNewsAction {
     private var news: [DSHalvedCardViewModel] = []
     private var isFetching = false
     private var total: Int?
+    private var type: String?
     
     // MARK: - Init
-    init(view: FeedNewsView) {
+    init(view: FeedNewsView, type: String? = nil) {
         self.view = view
         self.apiClient = FeedAPIClient()
+        self.type = type
     }
     
     // MARK: - Public Methods
@@ -33,10 +39,26 @@ final class FeedNewsPresenter: FeedNewsAction {
         fetchScreen()
     }
     
+    // MARK: - FeedNewsAction
+    
+    var itemsCount: Int {
+        return news.count
+    }
+    
+    var totalItems: Int {
+        return total ?? 0
+    }
+    
+    func fetchBatchUpdate() {
+        fetchNews()
+    }
+    
     // MARK: - API
     private func fetchScreen() {
         view.setLoadingState(.loading)
-        apiClient.getFeedNewsScreen().observe { [weak self] event in
+        apiClient
+            .getFeedNewsScreen()
+            .observe { [weak self] event in
             guard let self else { return }
             switch event {
             case .next(let response):
@@ -59,10 +81,14 @@ final class FeedNewsPresenter: FeedNewsAction {
             return
         }
         
-        let pagination: PaginationModel = PaginationModel(skip: news.count, limit: Constants.paginationLimit, search: nil)
+        let pagination: PaginationModel = PaginationModel(
+            skip: news.count,
+            limit: Constants.paginationLimit,
+            search: nil)
         isFetching = true
         
-        apiClient.getFeedNews(pagination: pagination).observe { [weak self] event in
+        apiClient.getFeedNews(pagination: pagination,
+                              type: type).observe { [weak self] event in
             guard let self else { return }
             switch event {
             case .next(let response):
@@ -77,6 +103,7 @@ final class FeedNewsPresenter: FeedNewsAction {
             default:
                 return
             }
+            self.isFetching = false
         }.dispose(in: bag)
     }
     

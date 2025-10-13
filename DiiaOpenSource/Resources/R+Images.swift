@@ -11,6 +11,7 @@ extension R {
         case faceId
         case fingerprint
         case qrScanner
+        case search_light
         
         // MARK: - Images
         case loadingBar
