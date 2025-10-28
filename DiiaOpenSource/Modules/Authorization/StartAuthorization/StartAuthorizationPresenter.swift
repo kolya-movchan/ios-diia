@@ -94,11 +94,10 @@ final class StartAuthorizationPresenter: StartAuthorizationAction {
         }
 
         guard var authMethods = model.authMethods else { return }
-        authMethods.removeAll(where: { $0 != .bankid })
+        authMethods.removeAll(where: { $0 != .bankId })
         configureAuthState()
 
-        let authMethodItems = authMethods.map {
-            let authMethod = $0.toAuthMethod()
+        let authMethodItems = authMethods.map { authMethod in
             let viewModel = DSListItemViewModel(
                 leftBigIcon: authMethod.icon,
                 title: authMethod.label ?? "",

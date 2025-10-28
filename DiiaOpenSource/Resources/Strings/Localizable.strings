@@ -1,11 +1,17 @@
 // MARK: - Accessibility
 "general_accessibility_close" = "Закрити";
+"general_accessibility_back_button_label" = "Назад";
 "auth_accessibility_start_person_data" = "Натисніть щоб ознайомитися з Повідомленням про обробку персональних даних.";
 "auth_accessibility_start_checkmark" = "Активуйте, якщо ви ознайомилися з Повідомленням про обробку персональних даних. Ваша згода активує способи авторизації";
 "main_screen_accessibility_top_qr_scanner_button" = "Відсканувати QR-код";
 "main_screen_accessibility_bottom_bar_cell_active" = "%@ - активна";
 "main_screen_accessibility_bottom_bar_cell_inactive" = "%@ - неактивна";
 "main_screen_accessibility_bottom_bar_cell_tabulation" = "табуляція %@ з %@";
+"main_screen_accessibility_bottom_bar_cell_have_updates" = "Є нові повідомлення";
+
+"documents_accessibility_change_order_label" = "Змінити порядок %@";
+"documents_accessibility_change_order_hint" = "Торкніть двічі і тримайте. Чекайте звук, потім тягніть для зміни порядку.";
+"documents_accessibility_change_order_announce" = "Перенесено в рядок %d із %d";
 
 // MARK: - General
 "general_cancel" = "Скасувати";

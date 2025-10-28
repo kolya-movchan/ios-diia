@@ -9,6 +9,7 @@ protocol MainTabBarAction: BasePresenter {
     func updateSelectionIfNeed(for currentIndex: Int)
     func topButtonClicked()
     func processAction(action: MainTabAction)
+    func getUnreadMessagesItemStatus() -> UnreadTabBarItem?
 }
 
 private enum TabType {
@@ -39,6 +40,12 @@ private enum TabType {
 final class MainTabBarPresenter: NSObject, MainTabBarAction {
     unowned var view: MainTabBarView
     private var currentIndex: Int?
+    
+    private var haveUnreadMessages = false {
+        didSet {
+            view.updateView()
+        }
+    }
 
     private var tabs: [TabType] = []
     private let qrHelper: DiiaQRScannerHelper
@@ -134,7 +141,7 @@ final class MainTabBarPresenter: NSObject, MainTabBarAction {
             view.setupCurrentController(viewController)
             view.setBackground(background: .image(image: R.image.light_background.image))
         }
-        view.setupSelectedItem(index: index)
+        view.setupSelectedItem(index: index, haveUnreadItem: getUnreadMessagesItemStatus())
     }
     
     func processAction(action: MainTabAction) {
@@ -149,6 +156,16 @@ final class MainTabBarPresenter: NSObject, MainTabBarAction {
             }
         default: break
         }
+    }
+    
+    func getUnreadMessagesItemStatus() -> UnreadTabBarItem? {
+        if let haveUnreadItemIndex = tabs.firstIndex(where: { item in
+            if case .menu = item { return true }
+            return false
+        }) {
+            return (haveUnreadItemIndex, haveUnreadMessages)
+        }
+        return nil
     }
 }
 

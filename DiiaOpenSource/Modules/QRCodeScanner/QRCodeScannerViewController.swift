@@ -14,6 +14,9 @@ final class QRCodeScannerViewController: UIViewController, Storyboarded {
     private var captureSession: AVCaptureSession!
     private var previewLayer: AVCaptureVideoPreviewLayer!
     
+    @IBOutlet weak private var backButton: UIButton!
+    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var descriptionLabel: UILabel!
     @IBOutlet weak private var previewContainer: UIView!
     @IBOutlet weak private var alertLabel: UILabel!
 
@@ -22,6 +25,7 @@ final class QRCodeScannerViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         
         setupCamera()
+        setupAccessibility()
         presenter.configureView()
     }
     
@@ -72,6 +76,18 @@ final class QRCodeScannerViewController: UIViewController, Storyboarded {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer?.frame = previewContainer.bounds
+    }
+    
+    private func setupAccessibility() {
+        backButton.isAccessibilityElement = true
+        backButton.accessibilityTraits = .button
+        backButton.accessibilityLabel = R.Strings.general_accessibility_back_button_label.localized()
+        
+        titleLabel.isAccessibilityElement = true
+        titleLabel.accessibilityLabel = titleLabel.text
+        
+        descriptionLabel.isAccessibilityElement = true
+        descriptionLabel.accessibilityLabel = descriptionLabel.text
     }
     
     // MARK: - Actions

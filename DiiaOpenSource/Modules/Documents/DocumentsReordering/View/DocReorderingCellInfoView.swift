@@ -6,6 +6,22 @@ struct DocReorderingCellInfoViewModel {
     let title: String
     let subtitle: String?
     let rightIcon: UIImage?
+    let rightIconAccessibilityLabel: String?
+    let rightIconAccessibilityHint: String?
+    
+    init(
+        title: String,
+        subtitle: String?,
+        rightIcon: UIImage?,
+        rightIconAccessibilityLabel: String? = nil,
+        rightIconAccessibilityHint: String? = nil
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.rightIcon = rightIcon
+        self.rightIconAccessibilityLabel = rightIconAccessibilityLabel
+        self.rightIconAccessibilityHint = rightIconAccessibilityHint
+    }
 }
 
 // MARK: - View
@@ -31,21 +47,39 @@ class DocReorderingCellInfoView: BaseCodeView {
     // MARK: - Public Methods
     func configure(with viewModel: DocReorderingCellInfoViewModel) {
         titleLabel.text = viewModel.title
+        titleLabel.accessibilityLabel = viewModel.title
         
         subtitleLabel.isHidden = viewModel.subtitle == nil
         if let subtitle = viewModel.subtitle {
             subtitleLabel.text = subtitle
+            subtitleLabel.accessibilityLabel = subtitle
         }
         
         rightImage.isHidden = viewModel.rightIcon == nil
         if let rightIcon = viewModel.rightIcon {
             rightImage.image = rightIcon
+            rightImage.accessibilityLabel = viewModel.rightIconAccessibilityLabel
+            rightImage.accessibilityHint = viewModel.rightIconAccessibilityHint
         }
     }
     
     // MARK: - Private Methods
     private func setupUI() {
         backgroundColor = .clear
+        
+        setupAccessibility()
+    }
+    
+    // MARK: - Accessibility
+    private func setupAccessibility() {
+        titleLabel.isAccessibilityElement = true
+        titleLabel.accessibilityTraits = .staticText
+        
+        subtitleLabel.isAccessibilityElement = true
+        subtitleLabel.accessibilityTraits = .staticText
+        
+        rightImage.isAccessibilityElement = true
+        rightImage.accessibilityTraits = .button
     }
 }
 

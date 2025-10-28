@@ -45,7 +45,10 @@ final class DocumentsStackReorderingPresenter: DocumentsStackReorderingAction {
             documentItem: DocReorderingCellInfoViewModel(
                 title: selectedDoc.orderConfigurations?.label ?? "",
                 subtitle: selectedDoc.orderConfigurations?.description,
-                rightIcon: R.image.ds_drag.image)
+                rightIcon: R.image.ds_drag.image,
+                rightIconAccessibilityLabel: R.Strings.documents_accessibility_change_order_label.formattedLocalized(arguments: selectedDoc.orderConfigurations?.label ?? ""),
+                rightIconAccessibilityHint: R.Strings.documents_accessibility_change_order_hint.localized()
+            )
         )
     }
     

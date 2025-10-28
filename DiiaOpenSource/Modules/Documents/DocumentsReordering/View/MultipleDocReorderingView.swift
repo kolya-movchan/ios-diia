@@ -35,6 +35,7 @@ class MultipleDocReorderingView: BaseCodeView {
                padding: Constants.paddings)
         
         setupUI()
+        setupAccessibility()
         addTapGestureRecognizer()
     }
     
@@ -45,6 +46,7 @@ class MultipleDocReorderingView: BaseCodeView {
         leftImage.image = viewModel.leftIcon
         
         titleLabel.text = viewModel.title
+        accessibilityLabel = viewModel.title
         
         leftImage.isHidden = viewModel.leftIcon == nil
         rightImage.image = viewModel.rightIcon
@@ -64,6 +66,12 @@ class MultipleDocReorderingView: BaseCodeView {
     // MARK: - Actions
     @objc private func onClick() {
         viewModel?.touchAction?()
+    }
+    
+    // MARK: - Accessibility
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 }
 

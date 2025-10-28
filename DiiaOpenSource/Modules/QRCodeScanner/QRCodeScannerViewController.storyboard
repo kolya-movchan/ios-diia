@@ -170,7 +170,10 @@
                     </view>
                     <connections>
                         <outlet property="alertLabel" destination="VW8-iN-D4a" id="eGN-nl-bcX"/>
+                        <outlet property="backButton" destination="k4s-sE-uhp" id="D7G-fl-cg0"/>
+                        <outlet property="descriptionLabel" destination="Jjx-LT-AE3" id="Wel-1d-z9n"/>
                         <outlet property="previewContainer" destination="75q-tU-drR" id="cdS-wV-dOZ"/>
+                        <outlet property="titleLabel" destination="i4G-Ac-lLq" id="mfS-Kx-DDb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lP5-Tj-O2C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -3,6 +3,8 @@ import Lottie
 import DiiaMVPModule
 import DiiaUIComponents
 
+typealias UnreadTabBarItem = (index: Int, isAvailable: Bool)
+
 protocol MainEmbeddable: UIViewController {
     func onSameSelected()
     func processAction(action: String)
@@ -15,7 +17,7 @@ protocol MainTabRoutingProtocol: UIViewController {
 protocol MainTabBarView: BaseView {
     func updateView()
     func setupCurrentController(_ viewController: UIViewController)
-    func setupSelectedItem(index: Int)
+    func setupSelectedItem(index: Int, haveUnreadItem: UnreadTabBarItem?)
     func updateTopColor(tabColor: TabBarColor)
     func configureTopView(isHidden: Bool, topButtonIcon: String?)
     func updateBottomColor(tabColor: TabBarColor)
@@ -103,13 +105,14 @@ extension MainTabBarViewController: MainTabBarView {
         currentChild = viewController
     }
     
-    func setupSelectedItem(index: Int) {
+    func setupSelectedItem(index: Int, haveUnreadItem: UnreadTabBarItem?) {
         currentIndex = index
         for indexPath in collectionView.indexPathsForVisibleItems {
             if let cell = collectionView.cellForItem(at: indexPath) as? MainTabCollectionCell {
                 configureCell(cell,
                               cellForItemAt: indexPath,
-                              selectedIndex: index)
+                              selectedIndex: index,
+                              haveUnreadItem: haveUnreadItem)
             }
         }
     }
@@ -209,7 +212,8 @@ extension MainTabBarViewController: UICollectionViewDataSource {
             cell.configure(with: vm)
             configureCell(cell,
                           cellForItemAt: indexPath,
-                          selectedIndex: currentIndex)
+                          selectedIndex: currentIndex,
+                          haveUnreadItem: presenter.getUnreadMessagesItemStatus())
 
             return cell
         }
@@ -239,11 +243,13 @@ extension MainTabBarViewController: UICollectionViewDelegateFlowLayout {
 private extension MainTabBarViewController {
     func configureCell(_ cell: MainTabCollectionCell,
                        cellForItemAt indexPath: IndexPath,
-                       selectedIndex: Int) {
+                       selectedIndex: Int,
+                       haveUnreadItem: UnreadTabBarItem?) {
         cell.setSelected(isSelected: indexPath.item == selectedIndex)
         cell.configureAccessibility(isSelected: indexPath.item == selectedIndex,
                                     currentValue: indexPath.item + 1,
-                                    totalValue: presenter.numberOfItems())
+                                    totalValue: presenter.numberOfItems(),
+                                    haveUnreadItem: indexPath.item == haveUnreadItem?.index ? haveUnreadItem?.isAvailable : nil)
     }
 }
 

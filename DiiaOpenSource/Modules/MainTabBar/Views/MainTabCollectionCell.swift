@@ -35,10 +35,11 @@ class MainTabCollectionCell: BaseCollectionNibCell {
         iconView.image = UIImage(named: imageName)
     }
     
-    func configureAccessibility(isSelected: Bool, currentValue: Int, totalValue: Int) {
+    func configureAccessibility(isSelected: Bool, currentValue: Int, totalValue: Int, haveUnreadItem: Bool?) {
         guard let viewModel = vm else { return }
-        self.accessibilityLabel = isSelected ? R.Strings.main_screen_accessibility_bottom_bar_cell_active.formattedLocalized(arguments: viewModel.title) : R.Strings.main_screen_accessibility_bottom_bar_cell_inactive.formattedLocalized(arguments: viewModel.title)
-        self.accessibilityHint = R.Strings.main_screen_accessibility_bottom_bar_cell_tabulation.formattedLocalized(arguments: "\(currentValue)", "\(totalValue)")
+        self.accessibilityLabel = viewModel.title
+        let haveUpdatesHint = haveUnreadItem ?? false ? "\(R.Strings.main_screen_accessibility_bottom_bar_cell_have_updates.localized()) " : ""
+        self.accessibilityHint = haveUpdatesHint
     }
     
     func configure(with viewModel: SelectableIconTitleViewModel) {

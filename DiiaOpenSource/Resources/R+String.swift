@@ -4,12 +4,18 @@ enum R {
     enum Strings: String {
         // MARK: - Accessibility
         case general_accessibility_close
+        case general_accessibility_back_button_label
         case auth_accessibility_start_person_data
         case auth_accessibility_start_checkmark
         case main_screen_accessibility_top_qr_scanner_button
         case main_screen_accessibility_bottom_bar_cell_active
         case main_screen_accessibility_bottom_bar_cell_inactive
         case main_screen_accessibility_bottom_bar_cell_tabulation
+        case main_screen_accessibility_bottom_bar_cell_have_updates
+        
+        case documents_accessibility_change_order_label
+        case documents_accessibility_change_order_hint
+        case documents_accessibility_change_order_announce
         
         // MARK: - General
         case general_cancel

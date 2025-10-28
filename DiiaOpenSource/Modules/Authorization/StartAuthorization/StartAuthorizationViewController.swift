@@ -107,9 +107,14 @@ final class StartAuthorizationViewController: UIViewController, Storyboarded {
         
         personalDataLabel.accessibilityLabel = R.Strings.auth_accessibility_start_person_data.localized()
         personalDataLabel.accessibilityTraits = .link
+        
         checkmarksView.isAccessibilityElement = true
         checkmarksView.accessibilityTraits = [.button, .selected]
         checkmarksView.accessibilityLabel = R.Strings.auth_accessibility_start_checkmark.localized()
+        
+        appVersion.isAccessibilityElement = true
+        appVersion.accessibilityTraits = .staticText
+        appVersion.accessibilityLabel = R.Strings.general_app_version.formattedLocalized(arguments: AppConstants.App.appVersion).replacingOccurrences(of: ".", with: " ")
     }
     
     private func updateCheckmarkAccessibility(isChecked: Bool) {

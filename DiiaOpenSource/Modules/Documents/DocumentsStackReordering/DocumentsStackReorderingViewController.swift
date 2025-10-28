@@ -18,6 +18,8 @@ final class DocumentsStackReorderingViewController: UIViewController {
     
     // MARK: - Properties
     var presenter: DocumentsStackReorderingAction!
+    
+    private var previousDestination: IndexPath = IndexPath(item: 0, section: 0)
 
     // MARK: - Init
     init() {
@@ -102,7 +104,22 @@ extension DocumentsStackReorderingViewController: UICollectionViewDragDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        var currentDestnation: IndexPath = IndexPath(item: 0, section: 0)
         guard destinationIndexPath != nil else { return .init(operation: .forbidden) }
+        
+        collectionView.performUsingPresentationValues {
+            currentDestnation = collectionView.indexPathForItem(at: session.location(in: collectionView)) ?? IndexPath(item: 0, section: 0)
+        }
+
+        if currentDestnation != previousDestination {
+            previousDestination = currentDestnation
+            guard let _ = collectionView.cellForItem(at: currentDestnation) else { return .init(operation: .forbidden) }
+            UIAccessibility.post(
+                notification: .announcement,
+                argument: R.Strings.documents_accessibility_change_order_announce.formattedLocalized(arguments: currentDestnation.item + 1, presenter.numberOfItems())
+            )
+            
+        }
         return .init(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     

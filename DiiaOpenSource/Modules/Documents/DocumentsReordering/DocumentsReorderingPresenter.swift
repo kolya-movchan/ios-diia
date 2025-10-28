@@ -35,7 +35,10 @@ final class DocumentsReorderingPresenter: DocumentsReorderingAction {
             documentItem: DocReorderingCellInfoViewModel(
                 title: selectedDoc.documentName ?? "",
                 subtitle: nil,
-                rightIcon: R.image.ds_drag.image),
+                rightIcon: R.image.ds_drag.image,
+                rightIconAccessibilityLabel: R.Strings.documents_accessibility_change_order_label.formattedLocalized(arguments: getDocumentTitle(for: selectedDoc)),
+                rightIconAccessibilityHint: R.Strings.documents_accessibility_change_order_hint.localized()
+            ),
             multipleDocItem: (selectedDocuments.count < 2) ? nil : MultipleDocReorderingViewModel(
                 leftIcon: R.image.ds_stack.image,
                 numberOfDocuments: selectedDocuments.count,
@@ -61,5 +64,14 @@ final class DocumentsReorderingPresenter: DocumentsReorderingAction {
     // MARK: - Private Methods
     private func saveDocumentsInOrder() {
         orderService.setOrder(order: documents.compactMap { $0.getValue().docType?.docCode }, synchronize: true)
+    }
+    
+    private func getDocumentTitle(for document: DocumentModel) -> String {
+        switch document.docType?.docCode {
+        case DocType.driverLicense.docCode, DocType.taxpayerСard.docCode:
+            return document.documentName ?? .empty
+        default:
+            return document.documentName ?? .empty
+        }
     }
 }
