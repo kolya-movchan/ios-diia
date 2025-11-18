@@ -2,6 +2,6 @@
 API_BASE_URL = api2oss.diia.gov.ua
 
 // APP SETTINGS
-APP_NAME = DiiaOS
+APP_NAME = Diia OpenSource
 APP_BUNDLE_ID = ua.gov.diia.opensource.app
 SCHEME = DiiaDev
